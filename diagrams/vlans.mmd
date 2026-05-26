@@ -1,0 +1,36 @@
+%%{init: {'theme': 'dark', 'themeVariables': {'fontSize': '13px'}}}%%
+flowchart LR
+  UDM["UDM SE\nYOUR-ROUTER-HOSTNAME"]
+
+  subgraph V1["VLAN_TRUSTED · Default · YOUR_TRUSTED_SUBNET"]
+    V1D["Trusted devices\nPCs · phones · laptops · Apple TV · consoles · TV"]
+  end
+
+  subgraph V62["VLAN_SERVERS · Secure Server Net · YOUR_SERVER_SUBNET"]
+    V62D["NAS / home server\nIsolated — strict firewall rules"]
+  end
+
+  subgraph V64["VLAN_KIDS · Time Controlled · YOUR_KIDS_SUBNET"]
+    V64D["Kids devices\nScheduled access via UniFi traffic rules"]
+  end
+
+  subgraph V65["VLAN_IOT · Over The Wall · YOUR_IOT_SUBNET"]
+    V65D["IoT devices\nEchos · WLED · cameras · smart plugs · Hue bridge"]
+  end
+
+  UDM --> V1
+  UDM --> V62
+  UDM --> V64
+  UDM --> V65
+
+  classDef router  fill:#1e3a5f,stroke:#378add,color:#b5d4f4
+  classDef vlan1   fill:#2a1f5c,stroke:#7f77dd,color:#cecbf6
+  classDef vlan62  fill:#04342c,stroke:#1d9e75,color:#9fe1cb
+  classDef vlan64  fill:#4b1528,stroke:#d4537e,color:#f4c0d1
+  classDef vlan65  fill:#4a1b0c,stroke:#d85a30,color:#f5c4b3
+
+  class UDM router
+  class V1,V1D vlan1
+  class V62,V62D vlan62
+  class V64,V64D vlan64
+  class V65,V65D vlan65

@@ -1,0 +1,35 @@
+name: Render diagrams
+
+on:
+  push:
+    paths:
+      - 'diagrams/*.mmd'
+  workflow_dispatch:
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Mermaid CLI
+        run: npm install -g @mermaid-js/mermaid-cli
+
+      - name: Render network.mmd → PNG
+        run: |
+          mmdc -i diagrams/network.mmd -o assets/network.png -t dark -b transparent --width 2400
+
+      - name: Render vlans.mmd → PNG
+        run: |
+          mmdc -i diagrams/vlans.mmd -o assets/vlans.png -t dark -b transparent --width 1600
+
+      - name: Commit rendered assets
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "ci: render diagrams [skip ci]"
+          file_pattern: assets/*.png

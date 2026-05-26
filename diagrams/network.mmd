@@ -1,0 +1,83 @@
+%%{init: {'theme': 'dark', 'themeVariables': {'fontSize': '13px'}}}%%
+flowchart TD
+  ISP["🌐 ISP Fiber Modem / ONT\nWAN handoff"]
+  UDM["🖥 UniFi Dream Machine SE\nRouter · Firewall · IDS/IPS · Controller\nVLAN_TRUSTED · YOUR_TRUSTED_SUBNET"]
+
+  ISP -->|WAN| UDM
+
+  subgraph CORE["Core switching"]
+    USW["USW-24-G2\n24-port · PoE+ · VLAN trunk"]
+    FM1["Flex Mini #1\n5-port cluster A"]
+    FM2["Flex Mini #2\n5-port cluster B"]
+    USW -->|trunk| FM1
+    USW -->|trunk| FM2
+  end
+
+  UDM -->|"trunk all VLANs"| USW
+
+  subgraph WIFI["Wi-Fi — 2× U7 Pro (Wi-Fi 7 · 2.4 / 5 / 6 GHz)"]
+    SSID1["Trusted 2.4 GHz\nVLAN_TRUSTED · YOUR_TRUSTED_SUBNET"]
+    SSID2["Trusted 5 GHz\nVLAN_TRUSTED · YOUR_TRUSTED_SUBNET"]
+    SSID3["IoT SSID\nVLAN_IOT · YOUR_IOT_SUBNET"]
+    SSID4["Kids SSID\nVLAN_KIDS · YOUR_KIDS_SUBNET"]
+  end
+
+  UDM -->|"VLAN-tagged SSIDs"| WIFI
+
+  subgraph VLAN1W["VLAN_TRUSTED — wireless"]
+    PH["Phones"]
+    LAP["Laptops"]
+  end
+
+  subgraph VLAN65W["VLAN_IOT — IoT wireless"]
+    ECH["Echo speakers"]
+    WLED["WLED strips"]
+    CAM["IP cameras"]
+    PLUG["Smart plugs"]
+  end
+
+  subgraph VLAN64W["VLAN_KIDS — Kids"]
+    KIDS["Kids devices"]
+  end
+
+  SSID1 --> PH
+  SSID2 --> LAP
+  SSID3 --> ECH
+  SSID3 --> WLED
+  SSID3 --> CAM
+  SSID3 --> PLUG
+  SSID4 --> KIDS
+
+  subgraph VLAN1W2["VLAN_TRUSTED — wired"]
+    PC["Desktop PC"]
+    ATV["Apple TV"]
+    CON["Gaming console"]
+    TV["Smart TV"]
+  end
+
+  subgraph VLAN62["VLAN_SERVERS — Secure Server Net · YOUR_SERVER_SUBNET"]
+    NAS["NAS / home server"]
+  end
+
+  subgraph VLAN65W2["VLAN_IOT — IoT wired"]
+    HUE["Philips Hue bridge"]
+  end
+
+  FM1 --> PC
+  FM1 --> NAS
+  FM2 --> ATV
+  FM2 --> CON
+  FM2 --> TV
+  USW --> HUE
+
+  classDef infra    fill:#1e3a5f,stroke:#378add,color:#b5d4f4
+  classDef vlan1    fill:#2a1f5c,stroke:#7f77dd,color:#cecbf6
+  classDef vlan65   fill:#4a1b0c,stroke:#d85a30,color:#f5c4b3
+  classDef vlan64   fill:#4b1528,stroke:#d4537e,color:#f4c0d1
+  classDef vlan62   fill:#04342c,stroke:#1d9e75,color:#9fe1cb
+
+  class ISP,UDM,USW,FM1,FM2,SSID1,SSID2,SSID3,SSID4 infra
+  class PH,LAP,PC,ATV,CON,TV vlan1
+  class ECH,WLED,CAM,PLUG,HUE vlan65
+  class KIDS vlan64
+  class NAS vlan62
