@@ -6,11 +6,16 @@ on:
       - 'diagrams/*.mmd'
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   render:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -22,16 +27,16 @@ jobs:
 
       - name: Create assets directory and puppeteer config
         run: |
-          mkdir -p assets
-          echo '{"args":["--no-sandbox","--disable-setuid-sandbox"]}' > puppeteer-config.json
+          mkdir -p $GITHUB_WORKSPACE/assets
+          echo '{"args":["--no-sandbox","--disable-setuid-sandbox"]}' > $GITHUB_WORKSPACE/puppeteer-config.json
 
       - name: Render network.mmd → PNG
         run: |
-          mmdc -i diagrams/network.mmd -o assets/network.png -t dark -b transparent --width 2400 -p puppeteer-config.json
+          mmdc -i diagrams/network.mmd -o assets/network.png -t dark -b transparent --width 2400 -p $GITHUB_WORKSPACE/puppeteer-config.json
 
       - name: Render vlans.mmd → PNG
         run: |
-          mmdc -i diagrams/vlans.mmd -o assets/vlans.png -t dark -b transparent --width 1600 -p puppeteer-config.json
+          mmdc -i diagrams/vlans.mmd -o assets/vlans.png -t dark -b transparent --width 1600 -p $GITHUB_WORKSPACE/puppeteer-config.json
 
       - name: Commit rendered assets
         uses: stefanzweifel/git-auto-commit-action@v5
