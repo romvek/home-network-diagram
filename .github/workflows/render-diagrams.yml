@@ -25,11 +25,11 @@ jobs:
 
       - name: Render network.mmd → PNG
         run: |
-          mmdc -i diagrams/network.mmd -o assets/network.png -t dark -b transparent --width 2400
+          mmdc -i diagrams/network.mmd -o assets/network.png -t dark -b transparent --width 2400 --puppeteerConfig puppeteer-config.json
 
       - name: Render vlans.mmd → PNG
         run: |
-          mmdc -i diagrams/vlans.mmd -o assets/vlans.png -t dark -b transparent --width 1600
+          mmdc -i diagrams/vlans.mmd -o assets/vlans.png -t dark -b transparent --width 1600 --puppeteerConfig puppeteer-config.json
 
       - name: Commit rendered assets
         uses: stefanzweifel/git-auto-commit-action@v5
