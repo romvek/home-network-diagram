@@ -22,10 +22,10 @@ A fully documented home network built on UniFi, with four isolated VLANs, wired 
 
 | VLAN ID | Name | Subnet | Purpose |
 |---------|------|--------|---------|
-| `VLAN_TRUSTED` | Default | `YOUR_TRUSTED_SUBNET` | PCs, phones, laptops, Apple TV, consoles |
-| `VLAN_SERVERS` | Secure Server Net | `YOUR_SERVER_SUBNET` | NAS and home servers, isolated |
+| `VLAN_TRUSTED` | MAIN | `YOUR_TRUSTED_SUBNET` | PCs, phones, laptops, Apple TV, consoles |
+| `VLAN_SERVERS` | Servers | `YOUR_SERVER_SUBNET` | NAS and home servers, isolated |
 | `VLAN_KIDS` | Time Controlled | `YOUR_KIDS_SUBNET` | Kids devices with scheduled access |
-| `VLAN_IOT` | Over The Wall | `YOUR_IOT_SUBNET` | IoT — cameras, smart plugs, WLED, Echos |
+| `VLAN_IOT` | IOT | `YOUR_IOT_SUBNET` | IoT — cameras, smart plugs, WLED, Echos |
 
 ---
 
