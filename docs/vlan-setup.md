@@ -28,7 +28,7 @@ Isolated network for NAS and home servers. Tightly controlled inbound/outbound r
 **Devices:** NAS / home server
 
 **UniFi settings:**
-- Network name: `Secure Server Net`
+- Network name: `Servers`
 - VLAN ID: `VLAN_SERVERS`
 - Subnet: `YOUR_SERVER_SUBNET`
 - DHCP range: `YOUR_SERVER_SUBNET.100 – .200`
@@ -66,7 +66,7 @@ Fully isolated IoT network. Devices reach the internet but cannot initiate conne
 **Devices:** Amazon Echos, WLED strips, IP cameras, smart plugs, Philips Hue bridge
 
 **UniFi settings:**
-- Network name: `Over The Wall` (or your preferred name)
+- Network name: `IOT` (or your preferred name)
 - VLAN ID: `VLAN_IOT`
 - Subnet: `YOUR_IOT_SUBNET`
 - SSID: dedicated IoT SSID (2.4 GHz preferred for IoT devices)
