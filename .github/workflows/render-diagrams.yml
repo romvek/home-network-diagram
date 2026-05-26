@@ -20,8 +20,10 @@ jobs:
       - name: Install Mermaid CLI
         run: npm install -g @mermaid-js/mermaid-cli
 
-      - name: Create assets directory
-        run: mkdir -p assets
+      - name: Create assets directory and puppeteer config
+        run: |
+          mkdir -p assets
+          echo '{"args":["--no-sandbox","--disable-setuid-sandbox"]}' > puppeteer-config.json
 
       - name: Render network.mmd → PNG
         run: |
