@@ -20,6 +20,9 @@ jobs:
       - name: Install Mermaid CLI
         run: npm install -g @mermaid-js/mermaid-cli
 
+      - name: Create assets directory
+        run: mkdir -p assets
+
       - name: Render network.mmd → PNG
         run: |
           mmdc -i diagrams/network.mmd -o assets/network.png -t dark -b transparent --width 2400
